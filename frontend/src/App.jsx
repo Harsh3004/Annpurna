@@ -1,14 +1,29 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
+import { Home } from './pages/Home';
+import { Community } from './pages/Community';
+import { Impact } from './pages/Impact';
+import { Profile } from './pages/Profile';
+import { DonateFood } from './pages/DonateFood';
+import { Error } from './pages/Error';
+
 
 function App() {
 
   return (
-    <>
-      <div className='text-black'>APP</div>
-    </>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path='/community' element={<Community />} />
+          <Route path='/impact' element={<Impact />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/donate-food' element={<DonateFood />} />
+          <Route path='*' element={<Error />}/>
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
