@@ -1,20 +1,38 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors";
+const express = require("express");
+const fileUpload = require('express-fileupload');
+const cookieParser = require("cookie-parser");
+const cors = require('cors');
 
-dotenv.config();
 const app = express();
-app.use(cors());
+require('dotenv').config();
+
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+    origin: `http://localhost:5173`,
+    credentials: true
+}));
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB error:", err));
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/',
+    // limits: { fileSize: 100 * 1024 * 1024 } //Since cloudinary allow upto 100mb for free tier
+}));
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+const cloudinaryConnect = require('./config/cloudinary');
+cloudinaryConnect();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+const connectDB = require('./config/db');
+connectDB();
+
+app.get('/',(req,res) => {
+    return res.json({
+        success: true,
+        message: `Your server is running...`
+    })
+})
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, ()=>{
+    console.log(`Server start successfully at PORT: ${PORT}`);
+})
