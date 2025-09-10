@@ -1,0 +1,16 @@
+{
+  "name": "annpurna",
+  "version": "1.0.0",
+  "description": "annpurna-mern/\r │\r ├── backend/\r │   ├── src/\r │   │   └── server.js\r │   ├── package.json\r │   └── .env\r │\r └── frontend/\r     ├── src/\r     │   └── App.jsx\r     ├── package.json\r     └── index.html",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently -c \"green,cyan\" -n \"BACKEND,FRONTEND\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
