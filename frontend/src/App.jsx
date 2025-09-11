@@ -7,6 +7,7 @@ import { Impact } from './pages/Impact';
 import { Profile } from './pages/Profile';
 import { DonateFood } from './pages/DonateFood';
 import { Error } from './pages/Error';
+import { Login } from './pages/Login';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <div>
       <Router>
         <Routes>
+          <Route path="/auth" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/community' element={<Community />} />
           <Route path='/impact' element={<Impact />} />

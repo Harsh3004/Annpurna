@@ -1,17 +1,20 @@
+require('dotenv').config();
 const express = require("express");
 const fileUpload = require('express-fileupload');
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 
-const app = express();
-require('dotenv').config();
+const authRoutes = require('./routes/authRoutes');
+const donationRoutes = require('./routes/donationRoutes');
 
-app.use(express.json());
-app.use(cookieParser());
+const app = express();
 app.use(cors({
     origin: `http://localhost:5173`,
     credentials: true
 }));
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(fileUpload({
     useTempFiles : true,
@@ -31,6 +34,11 @@ app.get('/',(req,res) => {
         message: `Your server is running...`
     })
 })
+
+
+// Routes
+app.use('/auth', authRoutes);
+app.use('/donations', donationRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, ()=>{
