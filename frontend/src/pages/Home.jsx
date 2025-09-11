@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { BottomNav } from './common/BottomNav';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 // --- Gemini API Helper 
 const callGeminiAPI = async (prompt) => {
@@ -55,6 +57,8 @@ const copyToClipboard = (text) => {
         // Use document.execCommand for broader browser support in iframes
         const successful = document.execCommand('copy');
         if(!successful) console.error('Fallback: Oops, unable to copy');
+
+        toast.success('Copied to clipboard');
     } catch (err) {
         console.error('Fallback: Oops, unable to copy', err);
     }
@@ -172,6 +176,7 @@ const Header = () => (
 const ShareMealCard = () => {
     const [inspiration, setInspiration] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const getInspiration = async () => {
         setIsLoading(true);
@@ -189,7 +194,7 @@ const ShareMealCard = () => {
                     <h2 className="font-bold text-gray-800">Share a Meal Today</h2>
                     <p className="text-sm text-gray-500">Turn your surplus food into someone's happiness</p>
                 </div>
-                <button className="bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-600 transition-colors">
+                <button className="bg-emerald-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-600 transition-colors" onClick={() => navigate('/donate')}>
                     Donate Now
                 </button>
             </div>
@@ -221,22 +226,26 @@ const ShareMealCard = () => {
     );
 };
 
-const ImpactSection = () => (
-  <section className="p-4">
-    <h3 className="text-lg font-bold text-gray-800 mb-4">Your Impact</h3>
-    <div className="grid grid-cols-3 gap-4">
-      {impactStats.map((stat, index) => (
-        <div key={index} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col items-center text-center">
-          <div className="mb-2">{stat.icon}</div>
-          <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
-          <p className="text-xs text-gray-500">{stat.label}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-);
+const ImpactSection = () => {
+  return(
+    <section className="p-4">
+      <h3 className="text-lg font-bold text-gray-800 mb-4">Your Impact</h3>
+      <div className="grid grid-cols-3 gap-4">
+        {impactStats.map((stat, index) => (
+          <div key={index} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+            <div className="mb-2">{stat.icon}</div>
+            <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+            <p className="text-xs text-gray-500">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-const RecentDonations = () => (
+const RecentDonations = () => {
+  const navigate = useNavigate();
+  return(
     <section className="p-4">
         <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-gray-800">My Recent Donations</h3>
@@ -248,12 +257,14 @@ const RecentDonations = () => (
             </div>
             <p className="font-semibold text-gray-700 mb-1">No donations yet</p>
             <p className="text-sm text-gray-500 mb-4">Start your journey by making your first donation!</p>
-            <button className="bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-emerald-600 transition-colors">
+            <button className="bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-emerald-600 transition-colors"
+            onClick={() => navigate('/donate')}
+            >
                 Make Your First Donation
             </button>
         </div>
     </section>
-);
+)}
 
 const OngoingEvents = () => {
     const [suggestion, setSuggestion] = useState('');

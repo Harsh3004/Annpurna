@@ -42,7 +42,7 @@ export const SignUp = () => {
       toast.success('Signup successful! Please log in.');
       
       // Navigate to the login page after successful signup
-      navigate('/login');
+      navigate('/home');
 
     } catch (error) {
       console.error('Signup Error:', error);

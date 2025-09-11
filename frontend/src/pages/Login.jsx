@@ -49,7 +49,7 @@ export const Login = () => {
         
         toast.success("Login Successfully");
         
-        navigate('/dashboard');
+        navigate('/home');
       }
       else
         throw new Error("Login Failed");
