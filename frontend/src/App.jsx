@@ -9,7 +9,7 @@ import { DonateFood } from './pages/DonateFood';
 import { Error } from './pages/Error';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
-
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -28,6 +28,8 @@ function App() {
           <Route path='*' element={<Error />}/>
         </Routes>
       </Router>
+
+      <Toaster/>
     </div>
   )
 }

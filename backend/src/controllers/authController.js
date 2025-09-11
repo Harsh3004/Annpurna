@@ -41,7 +41,7 @@ exports.register = async (req, res) => {
       })
   }
 
-  const userDetails = undefined;
+  let userDetails = undefined;
   try{
     userDetails = await User.create({
       first_name: firstName,
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
       passwordHash: hashPassword,
     })
   }catch(error){
-      console.error(err.message);
+      console.error(error.message);
       return res.status(500).send('Server Error');
   }
 
@@ -62,18 +62,66 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  try {
+  try{
+    console.log(`Logging`);
+
     const { email, password } = req.body;
+
+    console.log(email,password);
+    
+    if(!email || !password){
+      return res.status(400).json({
+          success: false,
+          message: `Missing Information - Enter details carefully`
+      })
+    }
+
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+    console.log(user);
 
-    const valid = await bcrypt.compare(password, user.passwordHash);
-    if (!valid) return res.status(401).json({ error: 'Invalid email or password' });
+    if(!user){
+      return res.status(401).json({
+        success: false,
+        message: `User not exist`
+      })
+    }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ token, user: { id: user._id, email, firstName: user.first_name, lastName: user.last_name, userType: user.user_type } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Login failed' });
+    if(!await bcrypt.compare(password, user.passwordHash)){
+      return res.status(401).json({
+        success: false,
+        message: `Invalid Password`
+      })
+    }
+
+    console.log(`Password Matched`);
+
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    console.log(`token Created`);
+
+    user.token = token;
+    user.passwordHash = undefined;  
+
+    req.user = user;
+    
+    const options = {
+        expires: new Date(Date.now() + 3*24*60*60*1000),
+        httpOnly: true
+    }
+
+    res.cookie('token',token,options).status(200).json({
+        success: true,
+        message: `Login Successfully`,
+        user
+    })
+  }catch(err){
+    res.status(500).json({
+        success: false,
+        message: `While login: ${err.message}`
+    })
   }
 };

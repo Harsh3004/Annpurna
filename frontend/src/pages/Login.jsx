@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { request } from '../services/authApi';
 
 // HeartIcon Component
 const HeartIcon = () => (
@@ -22,12 +24,42 @@ const HeartIcon = () => (
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Logging in with:', { email, password });
+
+    const toastId = toast.loading("Loading...");
+    try{
+      const res = await request("http://localhost:5000/api/users/login", "POST" , {email,password});
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+
+      if(res.ok){
+        localStorage.setItem("token",JSON.stringify(data.user.token));
+        localStorage.setItem("user",JSON.stringify(data.user));  
+        
+        console.log(`Login Successfully`);
+
+        // dispatch(setToken(data.userDetails.token));
+        // dispatch(setUser(data.userDetails));
+
+        toast.dismiss(toastId);
+        
+        toast.success("Login Successfully");
+        
+        navigate('/dashboard');
+      }
+      else
+        throw new Error("Login Failed");
+    }catch(err){
+      console.log(`Login Failed: ${err.message}`);
+      toast.dismiss(toastId);
+      toast.error("Login Failed");
+    }
   };
+
 
   return (
     <div className="bg-emerald-600 min-h-screen flex items-center justify-center font-sans p-4">
