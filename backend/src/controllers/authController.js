@@ -3,29 +3,62 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-  try {
-    const { email, password, firstName, lastName, userType, profile } = req.body;
-    const passwordHash = await bcrypt.hash(password, 10);
+  console.log(`Verifying status`);
+  
+  const { firstName, lastName, email, password, role } = req.body;
+  console.log(firstName,lastName,email,password,role);
+  
+  console.log('fetched details');
 
-    const user = new User({
-      email,
-      passwordHash,
+  // Basic validation
+  if (!firstName || !lastName || !email || !password || !role) {
+    console.log(`Enter all details carefully.`);
+    return res.status(400).json({
+        success: false,
+        message: 'Missing Information'
+    })
+  }
+  
+  const existingUser = await User.findOne({ email : email, role: role});
+  if(existingUser){
+      console.log(`Existing User`);
+      return res.status(400).json({
+          success: false,
+          message: 'User already exists'
+      })
+  }
+  
+  console.log("checked for existing");  
+  
+  let hashPassword;        
+  try{
+      hashPassword = await bcrypt.hash(password,10);
+  }catch(err){
+      console.log(`Error in Hashing`);
+      return res.status(500).json({
+          success: false,
+          message: `error in hashing`
+      })
+  }
+
+  const userDetails = undefined;
+  try{
+    userDetails = await User.create({
       first_name: firstName,
       last_name: lastName,
-      user_type: userType,
-      profile,
-    });
-
-    await user.save();
-
-    // Generate token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    
-    res.json({ token, user: { id: user._id, email, firstName, lastName, userType } });                                                      
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Registration failed' });
+      email: email,
+      user_type: role,
+      passwordHash: hashPassword,
+    })
+  }catch(error){
+      console.error(err.message);
+      return res.status(500).send('Server Error');
   }
+
+  return res.status(200).json({
+    success: true,
+    message: `SignUp successfully`
+  })
 };
 
 exports.login = async (req, res) => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // HeartIcon Component
 const HeartIcon = () => (
@@ -41,7 +42,7 @@ export const Login = () => {
 
         {/* Welcome Text */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Welcome to Annpurna</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Welcome to AnnaPurna</h1>
           <p className="text-gray-500 mt-2">Sign in to continue sharing meals and making impact</p>
         </div>
 
@@ -97,9 +98,9 @@ export const Login = () => {
         {/* Sign Up Link */}
         <p className="text-center text-sm text-gray-600 mt-8">
           Don't have an account?{' '}
-          <a href="#" className="font-medium text-emerald-600 hover:underline">
+          <Link to={'/signup'} className="font-medium text-emerald-600 hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

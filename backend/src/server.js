@@ -37,10 +37,10 @@ app.get('/',(req,res) => {
 
 
 // Routes
-app.use('/auth', authRoutes);
+app.use('/api/users', authRoutes);
 app.use('/donations', donationRoutes);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{
     console.log(`Server start successfully at PORT: ${PORT}`);
 })

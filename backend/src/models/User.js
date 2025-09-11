@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   passwordHash: { type: String, required: true },
   first_name: String,
   last_name: String,
-  user_type: String,
+  user_type: String, // 'Donate Food', 'Volunteer', 'Organization'
   profile: Object,
   stats: {
     total_donations: { type: Number, default: 0 },
