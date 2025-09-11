@@ -22,8 +22,8 @@ const CheckCircleIcon = ({className}) => (
 // --- Main Layout Components ---
 const Header = ({ onBack }) => (
     <header className="bg-emerald-500 text-white p-4 flex items-center sticky top-0 z-10">
-        <button onClick={onBack} className="mr-4"><BackArrowIcon /></button>
-        <h1 className="text-xl font-bold">Donate Food</h1>
+        {/* <button onClick={onBack} className="mr-4"><BackArrowIcon /></button> */}
+        {/* <h1 className="text-xl font-bold">Donate Food</h1> */}
     </header>
 );
 
