@@ -12,7 +12,6 @@ import { SignUp } from './pages/SignUp';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
-
   return (
     <div>
       <Router>
@@ -22,9 +21,11 @@ function App() {
           <Route path="/" element={<SignUp />} />
 
           <Route path="/home" element={<Home />} />
-          {/* <Route path="/home" element={<Home />} />
+          <Route path='/donate' element={<DonateFood />} />
           <Route path='/community' element={<Community />} />
           <Route path='/impact' element={<Impact />} />
+          <Route path='/profile' element={<Profile />} />
+          {/* <Route path="/home" element={<Home />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/donate-food' element={<DonateFood />} /> */}
           <Route path='*' element={<Error />}/>

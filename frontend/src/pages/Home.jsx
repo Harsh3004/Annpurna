@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BottomNav } from './common/BottomNav';
 
 // --- Gemini API Helper 
 const callGeminiAPI = async (prompt) => {
@@ -318,37 +319,6 @@ const OngoingEvents = () => {
 }
 
 
-const BottomNav = () => {
-  const [active, setActive] = useState('Home');
-  const navItems = [
-    { name: 'Home', icon: <HomeIcon /> },
-    { name: 'Donate', icon: <HeartIcon /> },
-    { name: 'Community', icon: <UsersIcon /> },
-    { name: 'Impact', icon: <BarChartIcon /> },
-    { name: 'Profile', icon: <UserCircleIcon /> },
-  ];
-
-  return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.1)] p-2">
-      <div className="flex justify-around">
-        {navItems.map((item) => (
-          <button
-            key={item.name}
-            onClick={() => setActive(item.name)}
-            className={`flex flex-col items-center justify-center text-xs w-16 h-16 rounded-lg transition-colors ${
-              active === item.name
-                ? 'bg-emerald-100 text-emerald-600'
-                : 'text-gray-500 hover:bg-gray-100'
-            }`}
-          >
-            <div className={`h-6 w-6 mb-1 ${active === item.name ? 'stroke-2' : ''}`}>{item.icon}</div>
-            {item.name}
-          </button>
-        ))}
-      </div>
-    </nav>
-  );
-};
 
 export const Home = () => {
   return (
