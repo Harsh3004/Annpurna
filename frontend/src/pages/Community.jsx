@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { BottomNav } from './common/BottomNav';
+import { FaRegCommentDots } from "react-icons/fa6";
+import { FaShareAlt, FaCamera  } from "react-icons/fa";
+import { MdOutlinePeopleAlt } from "react-icons/md";
 
 // Using inline SVGs for icons to keep it in a single file
 const icons = {
@@ -20,70 +23,13 @@ const icons = {
     </svg>
   ),
   camera: (props) => (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.53 2h2.94a2 2 0 011.664.89l.812 1.22a2 2 0 001.664.89H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-      />
-    </svg>
+    <FaCamera />
   ),
   comment: (props) => (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.493a9.862 9.862 0 01-2.67-4.507c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-      />
-    </svg>
+    <FaRegCommentDots className='w-5 h-5'/>
   ),
   share: (props) => (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M8.684 13.342C12.457 13.993 15 15.65 15 17h-.069a8.68 8.68 0 00-7.337-11.233C9 5.568 9 5.674 9 5.781c0 3.39-2.91 6.134-6.5 6.134H2c.552 0 1-.448 1-1V9a2 2 0 012-2h.93c1.664 0 2.894.89 3.42 2.228.526 1.338 1.13 2.28 2.052 2.885z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M15 17a5 5 0 11-10 0 5 5 0 0110 0zM12 7a3 3 0 100 6 3 3 0 000-6z"
-      />
-    </svg>
+    <FaShareAlt />
   ),
   plus: (props) => (
     <svg
@@ -419,11 +365,13 @@ export const Community = () => {
                   </div>
                   {/* Post Content */}
                   <p className="text-gray-700 mb-2">{post.content}</p>
-                  {post.tag && (
-                    <span className="bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
-                      {post.tag}
-                    </span>
-                  )}
+                  <span className="text-xs font-medium px-2 py-1 rounded-full">
+                    {post.tag && (
+                      <span className="bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
+                        {post.tag}
+                      </span>
+                    )}
+                  </span>
                   {post.image && (
                     <img src={post.image} alt="Story" className="mt-2 rounded-lg mx-auto" />
                   )}
@@ -433,7 +381,7 @@ export const Community = () => {
                       <div className="w-5 h-5">{icons.heart({})}</div>
                       <span>{post.likes}</span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-2">
                       <div className="w-5 h-5">{icons.comment({})}</div>
                       <span>{post.comments}</span>
                     </div>
@@ -453,8 +401,8 @@ export const Community = () => {
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-800">{group.name}</h3>
                   <p className="text-gray-500 text-sm">{group.description}</p>
-                  <div className="flex items-center gap-1 text-gray-400 text-xs">
-                    <div className="w-4 h-4">{icons.users({})}</div>
+                  <div className="mt-2 flex justify-center items-center gap-1 text-gray-400 text-xs">
+                    <MdOutlinePeopleAlt className='w-4 h-4'/>
                     <span>{group.members} members</span>
                   </div>
                 </div>
@@ -493,7 +441,7 @@ export const Community = () => {
                     <span>{event.location}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4">{icons.users({})}</div>
+                    <MdOutlinePeopleAlt className='w-4 h-4'/>
                     <span>{event.volunteers} volunteers registered</span>
                   </div>
                   {summaryText[event.name] && (
