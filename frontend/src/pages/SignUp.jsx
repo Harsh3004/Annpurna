@@ -119,7 +119,7 @@ export const SignUp = () => {
           {/* Role Dropdown */}
           <div className="text-left">
             <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-              I want to...
+              I want to register as...
             </label>
             <div className="relative mt-1">
               <select
@@ -130,7 +130,7 @@ export const SignUp = () => {
                 className="block w-full px-3 py-2 bg-gray-100 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
                 disabled={loading}
               >
-                <option value="Donate Food">❤️ Donate Food</option>
+                <option value="Donate Food">❤️ Donor</option>
                 <option value="Volunteer">🤝 Volunteer</option>
                 <option value="Organization">🏢 Organization</option>
               </select>

@@ -162,8 +162,8 @@ const SuggestionModal = ({ content, onClose, title }) => {
 const Header = () => (
   <header className="bg-emerald-500 text-white p-6 rounded-b-3xl">
     <div className="flex justify-between items-center mb-4">
-      <div>
-        <p className="text-sm">Good Evening</p>
+      <div className='text-left'>
+        <p className="text-sm">Good Morning</p>
         <h1 className="text-2xl font-bold">Welcome, Harsh! 👋</h1>
       </div>
       <div className="relative">
@@ -191,7 +191,7 @@ const ShareMealCard = () => {
     return (
         <div className="bg-white rounded-2xl p-4 shadow-md mt-5 mx-4 relative z-10">
             <div className="flex justify-between items-center">
-                 <div>
+                 <div className='text-left'>
                     <h2 className="font-bold text-gray-800">Share a Meal Today</h2>
                     <p className="text-sm text-gray-500">Turn your surplus food into someone's happiness</p>
                 </div>

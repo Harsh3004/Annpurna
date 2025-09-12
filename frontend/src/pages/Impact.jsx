@@ -1,6 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { BottomNav } from './common/BottomNav';
 import { FaHeart, FaLeaf, FaRegSmile, FaUsers, FaTrophy, FaStar, FaFire, FaBullseye } from 'react-icons/fa';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+// Registering Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // Helper component for individual impact stats with animation
 const AnimatedImpactStat = ({ icon, value: endValue, label, bgColor, iconColor, unit }) => {
@@ -64,7 +86,7 @@ const LeaderboardItem = ({ rank, name, meals, isCurrentUser }) => (
 );
 
 export const Impact = () => {
-  // Mock data based on screenshots - updated with values to show animation
+  // Mock data based on screenshots
   const impactData = {
     level: 1,
     points: 0,
@@ -75,13 +97,6 @@ export const Impact = () => {
     peopleHelped: 45,
     dayStreak: 12,
   };
-
-  const monthlyProgress = [
-    { month: 'Sep', value: 45 },
-    { month: 'Oct', value: 72 },
-    { month: 'Nov', value: 58 },
-    { month: 'Dec', value: 0 },
-  ];
 
   const achievements = [
     { icon: '🎉', title: 'First Donation', progress: 0 },
@@ -100,6 +115,63 @@ export const Impact = () => {
     { rank: 5, name: 'Rohit Gupta', meals: 834 },
   ].sort((a, b) => b.meals - a.meals).map((user, index) => ({ ...user, rank: index + 1 }));
 
+  // --- START: NEW CHART.JS CONFIGURATION ---
+  const lineChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: false, // Allows the axis to go below 0
+        grid: {
+          color: '#E5E7EB', // Light gray grid lines
+        },
+        ticks: {
+          color: '#6B7280',
+        },
+      },
+      x: {
+        grid: {
+          display: false, // Hides vertical grid lines
+        },
+        ticks: {
+          color: '#6B7280',
+        },
+      },
+    },
+    elements: {
+      line: {
+        tension: 0.4, // Makes the line smooth and curved
+      },
+    },
+  };
+
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'];
+
+  const lineChartData = {
+    labels,
+    datasets: [
+      {
+        label: 'Monthly Progress',
+        // Mock data estimated from your screenshot
+        data: [0, 95, 63, 10, 55, 72, 22,30,10], 
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        pointBackgroundColor: 'rgb(255, 99, 132)',
+        pointBorderColor: '#fff',
+        pointHoverRadius: 7,
+        pointRadius: 5,
+      },
+    ],
+  };
+  // --- END: NEW CHART.JS CONFIGURATION ---
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
@@ -112,7 +184,7 @@ export const Impact = () => {
               <div className="bg-yellow-400 p-2 rounded-full mr-4">
                 <FaStar />
               </div>
-              <div>
+              <div className='text-left'>
                 <p className="font-bold">Level {impactData.level} Donor</p>
                 <p className="text-sm">{impactData.points} points</p>
               </div>
@@ -165,18 +237,11 @@ export const Impact = () => {
 
         </div>
 
-        {/* Monthly Progress Section */}
+        {/* --- Monthly Progress Section --- */}
         <div className="bg-white p-5 rounded-2xl shadow-sm mb-6">
-          <h2 className="text-lg font-bold text-gray-800 mb-14">Monthly Progress</h2>
-          <div className="flex justify-around items-end h-32">
-            {monthlyProgress.map((month) => (
-              <div key={month.month} className="text-center">
-                <div className="bg-gray-200 rounded-lg w-10 h-32 flex items-end">
-                  <div className="bg-green-400 rounded-lg w-full" style={{ height: `${month.value}%` }}></div>
-                </div>
-                <p className="text-sm text-gray-500 mt-2">{month.month}</p>
-              </div>
-            ))}
+          <h2 className="text-lg font-bold text-gray-800 mb-4">Monthly Progress</h2>
+          <div className="relative h-64">
+            <Line options={lineChartOptions} data={lineChartData} />
           </div>
         </div>
 
@@ -193,8 +258,6 @@ export const Impact = () => {
 
           {/* Local Leaderboard Section */}
           <div>
-            {/*  Add avatar */}
-
             <h2 className="text-lg font-bold text-gray-800 mb-4 px-1">Local Leaderboard</h2>
             <div>
               {leaderboard.map((user) => (
