@@ -3,6 +3,12 @@ import { BottomNav } from './common/BottomNav';
 import { FaRegCommentDots } from "react-icons/fa6";
 import { FaShareAlt, FaCamera  } from "react-icons/fa";
 import { MdOutlinePeopleAlt } from "react-icons/md";
+import donation1 from '../assets/donation1.png';
+import donation2 from '../assets/donation2.png';
+import training from '../assets/training.png';
+import community1 from '../assets/community1.png';
+import foodDonation from '../assets/foodDonation.png';
+
 
 // Using inline SVGs for icons to keep it in a single file
 const icons = {
@@ -124,7 +130,7 @@ const mockPosts = [
     content:
       'Just delivered 20 servings of dal-rice to the local shelter. The smiles on their faces made my entire day! 😊',
     tag: 'Dal Rice - 20 servings',
-    image: 'https://placehold.co/400x200/e2e8f0/0f172a?text=Story',
+    image: donation1,
     likes: 24,
     comments: 8,
   },
@@ -135,7 +141,7 @@ const mockPosts = [
     content:
       'Amazing experience volunteering at today’s food drive! We managed to distribute meals to over 100 families. Thank you to everyone who donated! 🙏',
     tag: null,
-    image: 'https://placehold.co/400x200/e2e8f0/0f172a?text=Story',
+    image: donation2,
     likes: 45,
     comments: 12,
   },
@@ -180,7 +186,7 @@ const mockGroups = [
 // Mock data for the events
 const mockEvents = [
   {
-    image: 'https://placehold.co/400x120/e2e8f0/0f172a?text=Community+Kitchen+Drive',
+    image: community1,
     name: 'Community Kitchen Drive',
     date: 'Tomorrow, 10 AM',
     location: 'Central Park, Mumbai',
@@ -189,7 +195,7 @@ const mockEvents = [
     buttonText: 'Register',
   },
   {
-    image: 'https://placehold.co/400x120/e2e8f0/0f172a?text=Food+Distribution+Camp',
+    image: foodDonation,
     name: 'Food Distribution Camp',
     date: 'Sunday, 9 AM',
     location: 'Station Road, Delhi',
@@ -198,7 +204,7 @@ const mockEvents = [
     buttonText: 'Register',
   },
   {
-    image: 'https://placehold.co/400x120/e2e8f0/0f172a?text=Volunteer+Training+Workshop',
+    image: training,
     name: 'Volunteer Training Workshop',
     date: 'Next Monday, 6 PM',
     location: 'Online Event',
@@ -373,7 +379,7 @@ export const Community = () => {
                     )}
                   </span>
                   {post.image && (
-                    <img src={post.image} alt="Story" className="mt-2 rounded-lg mx-auto" />
+                    <img src={post.image} alt="Story" className="mt-2 object-contain rounded-lg mx-auto" />
                   )}
                   {/* Post Actions */}
                   <div className="flex items-center justify-around text-gray-400 mt-4 border-t pt-4">
