@@ -378,7 +378,7 @@ export const Community = () => {
             {/* Post Creation Box */}
             <div className="bg-white rounded-xl shadow-md p-4 mb-4 flex items-center gap-4">
               <div className="bg-gray-200 w-10 h-10 rounded-full flex items-center justify-center font-bold text-gray-500 text-sm">
-                PS
+                HJ
               </div>
               <input
                 type="text"

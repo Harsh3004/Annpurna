@@ -54,7 +54,8 @@ const LeaderboardItem = ({ rank, name, meals, isCurrentUser }) => (
     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-white mr-4 ${rank === 1 ? 'bg-yellow-400' : rank === 2 ? 'bg-gray-400' : rank === 3 ? 'bg-yellow-600' : 'bg-gray-300'}`}>
       {rank}
     </div>
-    <div className="flex-grow">
+
+    <div className="flex-grow text-left">
       <p className={`font-bold text-gray-800 ${isCurrentUser ? 'text-green-800' : ''}`}>{name} {isCurrentUser && '(You)'}</p>
       <p className="text-sm text-gray-500">{meals} meals donated</p>
     </div>
@@ -132,7 +133,7 @@ export const Impact = () => {
           {/* Impact Stats Grid */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <AnimatedImpactStat
-              icon={<FaLeaf />}
+              icon={<FaLeaf/>}
               value={impactData.co2Saved}
               unit=" kg"
               label="CO₂ Saved"

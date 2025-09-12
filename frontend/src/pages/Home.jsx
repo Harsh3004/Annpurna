@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BottomNav } from './common/BottomNav';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { FaLeaf } from 'react-icons/fa';
 
 // --- Gemini API Helper 
 const callGeminiAPI = async (prompt) => {
@@ -77,7 +78,7 @@ const impactStats = [
   },
   {
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-green-500"><path d="M11 20A7 7 0 0 1 4 13H2a9 9 0 0 0 18 0h-2a7 7 0 0 1-7 7Zm-2-5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm8 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-4-5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 6.34 1.41-1.41"/></svg>
+      <FaLeaf className='text-emerald-500 w-6 h-6'/>
     ),
     value: 0,
     label: "kg CO2 Saved",
@@ -249,7 +250,9 @@ const RecentDonations = () => {
     <section className="p-4">
         <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-gray-800">My Recent Donations</h3>
-            <a href="#" className="text-sm font-semibold text-emerald-500 hover:text-emerald-600">View All →</a>
+            <Link to={`/profile`} className="text-sm font-semibold text-emerald-500 hover:text-emerald-600">
+              View All →
+            </Link>
         </div>
         <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center">
             <div className="bg-gray-100 rounded-full p-4 mb-4">
@@ -282,7 +285,9 @@ const OngoingEvents = () => {
     <section className="p-4">
         <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-gray-800">Ongoing Events</h3>
-            <a href="#" className="text-sm font-semibold text-emerald-500 hover:text-emerald-600">View All →</a>
+            <Link to={`/community`} className="text-sm font-semibold text-emerald-500 hover:text-emerald-600">
+              View All →
+            </Link>
         </div>
          <div className="mb-4">
             <button
