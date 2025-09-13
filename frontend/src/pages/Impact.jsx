@@ -84,13 +84,65 @@ const AnimatedNumber = ({ value }) => {
   return <span className="font-bold text-5xl text-gray-900">{currentValue.toFixed(1)}</span>;
 };
 
+// NEW CHART: Food Emissions Breakdown Donut Chart
 const EmissionsDonutChart = ({ data }) => {
-  const chartData = {
-    labels: data.map(item => item.category),
-    datasets: [{ data: data.map(item => item.value), backgroundColor: ['#34D399', '#FCD34D', '#FB923C'], borderColor: '#ffffff', borderWidth: 2, }],
-  };
-  const options = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 20, font: { size: 14 }, color: '#4B5563' } }, tooltip: { callbacks: { label: (c) => `${c.label || ''}: ${c.parsed || 0} kg CO₂` } } }, cutout: '60%' };
-  return <div className="relative h-64 w-full"><Doughnut data={chartData} options={options} /></div>;
+    data = [
+    { category: 'Meat & Dairy', value: 35.0 },
+    { category: 'Grains & Cereals', value: 8.0 },
+    { category: 'Fruits & Vegetables', value: 5.0 },
+    { category: 'Food Waste', value: 3.0 },
+];
+    const chartData = {
+        labels: data.map(item => item.category),
+        datasets: [
+            {
+                data: data.map(item => item.value),
+                // Expanded the color palette for more data points
+                backgroundColor: ['#34D399', '#FCD34D', '#FB923C', '#F87171'], // Emerald, Yellow, Orange, Red
+                borderColor: '#ffffff',
+                borderWidth: 2,
+            },
+        ],
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: {
+                    boxWidth: 12,
+                    padding: 20,
+                    font: {
+                        size: 14,
+                    },
+                    color: '#4B5563', // gray-700
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed !== null) {
+                            label += context.parsed.toFixed(1) + ' kg CO₂';
+                        }
+                        return label;
+                    }
+                }
+            }
+        },
+        cutout: '60%', // Makes it a donut chart
+    };
+
+    return (
+        <div className="relative h-64 w-full">
+             <Doughnut data={chartData} options={options} />
+        </div>
+    );
 };
 
 const GlobalComparisonBarChart = ({ userAnnual, globalAverage }) => {
@@ -133,8 +185,12 @@ const ResultsView = ({ onCalculateAgain }) => {
             <AnimatedNumber value={resultData.total} />
             <span className="text-2xl text-gray-600"> kg CO₂</span>
             <p className="text-gray-500">monthly emissions</p></div><p className="text-gray-600 font-medium">{(resultData.total * 12).toFixed(1)} kg CO₂ annually</p><span className="inline-flex items-center gap-1 text-sm font-semibold bg-green-100 text-green-700 px-3 py-1 rounded-full">🌱 Low Impact</span><div className="text-left pt-4"><div className="flex justify-between text-sm font-medium text-gray-600 mb-1"><span>vs Global Average</span><span>{resultData.globalAverage.toLocaleString()} kg CO₂/year</span></div><div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-gray-800 h-2.5 rounded-full" style={{ width: `${(userAnnual / resultData.globalAverage) * 100}%` }}></div></div><p className="text-center text-sm text-gray-600 mt-2 font-medium">{percentBelowAverage.toFixed(0)}% below average</p></div></div>
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md"><h3 className="font-semibold text-gray-900 mb-2">Personalized Feedback</h3><p className="text-gray-700">Your carbon footprint is lower than average! Great job on your environmental consciousness.</p></div>
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md"><h3 className="font-semibold text-gray-900 mb-3">Ways to Reduce Your Impact</h3><ul className="list-disc list-inside space-y-2 text-emerald-700"><li><span className="text-gray-700">Use public transport, bike, or walk instead of driving</span></li><li><span className="text-gray-700">Switch to renewable energy sources</span></li><li><span className="text-gray-700">Reduce meat consumption and food waste</span></li><li><span className="text-gray-700">Donate surplus food through Annapurna to prevent waste</span></li></ul></div>
+        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md"><h3 className="font-semibold text-xl text-gray-900 mb-2">Personalized Feedback</h3><p className="text-gray-700">Your carbon footprint is lower than average! Great job on your environmental consciousness.</p></div>
+        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+          <h3 className="font-semibold text-xl text-gray-900 mb-3">
+            Ways to Reduce Your Impact
+          </h3>
+          <ul className="list-disc list-inside space-y-2 text-emerald-700 list-none"><li><span className="text-gray-700">Choose more plant-based meals (beans, lentils, vegetables) instead of meat.</span></li><li><span className="text-gray-700">Reduce food waste by planning meals and storing food properly.</span></li><li><span className="text-gray-700">Freeze leftovers or surplus ingredients before they spoil.</span></li><li><span className="text-gray-700">Donate surplus food through Annapurna to prevent waste</span></li></ul></div>
 
         </div>
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md space-y-4"><h3 className="font-semibold text-gray-900">Emissions Breakdown</h3><EmissionsDonutChart data={resultData.breakdown} /></div>
@@ -167,7 +223,10 @@ const CalculatorView = ({ onBackClick }) => {
               </p>
             </div>
           </div>
-          <div className="flex items-center bg-gray-100 p-1 rounded-full mb-6"><button onClick={() => setMainView('Calculator')} className={mainTabClass('Calculator')}><CalculatorIcon /> Calculator</button><button onClick={() => setMainView('History')} className={mainTabClass('History')}><HistoryIcon /> History</button></div>
+          <div className="flex items-center bg-gray-100 p-1 rounded-full mb-6"><button onClick={() => setMainView('Calculator')} className={mainTabClass('Calculator')}><CalculatorIcon /> Calculator</button>
+          <button onClick={() => setMainView('History')} className={mainTabClass('History')}><HistoryIcon /> 
+            History
+          </button></div>
           {mainView === 'Calculator' && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col gap-6 animate-fade-in-up">
               <div className="flex items-center gap-3">
@@ -184,13 +243,30 @@ const CalculatorView = ({ onBackClick }) => {
                 <button onClick={() => setActiveCategory('Food')} className={categoryTabClass('Food')}>🥗 Food</button></div>
               <div className="flex flex-col gap-4">
                 {activeCategory === 'Transport' && (<p className="text-center text-gray-500 p-4 bg-gray-50 rounded-lg">Transport inputs go here.</p>)}
-                {activeCategory === 'Food' && (<div><label htmlFor="diet-type" className="block text-sm font-medium text-gray-700 mb-2">Diet Type</label><select id="diet-type" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400"><option value="" disabled selected>Select your diet type</option><option value="vegan">Vegan</option></select></div>)}
+                {activeCategory === 'Food' && (<div><label htmlFor="diet-type" className="block text-sm font-medium text-gray-700 mb-2">Diet Type</label><select id="diet-type" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400">
+                  <option value="" disabled selected>Select your diet type</option>
+                  <option value="vegan"></option>
+                  <option value="vegan">Vegan</option>
+                  <option value="vegan">Vegan</option>
+                </select></div>)}
                 {activeCategory === 'Energy' && (<p className="text-center text-gray-500 p-4 bg-gray-50 rounded-lg">Energy inputs go here. 💡</p>)}
               </div>
               <button onClick={() => setCalculatorState('result')} className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-5 rounded-lg w-full transition-colors duration-200 mt-2">Calculate Carbon Footprint</button>
             </div>
           )}
-          {mainView === 'History' && (<div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col gap-4 animate-fade-in-up"><div className="flex items-center gap-3"><CalendarIcon /><h2 className="text-lg font-semibold text-gray-900">Calculation History</h2></div><div className="flex flex-col gap-3">{historyData.map(item => (<div key={item.id} className="bg-white border border-gray-200 rounded-lg p-4"><div className="flex justify-between items-center mb-2"><p className="text-lg text-gray-800"><span className="font-bold">{item.value.toFixed(1)} kg CO₂</span></p><span className="inline-flex items-center gap-1 text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>{item.tag}</span></div><p className="text-sm text-gray-500">{item.period} • {item.date}</p><p className="text-sm text-gray-500">Annual: {item.annualValue.toFixed(1)} kg CO₂</p></div>))}</div></div>)}
+          {mainView === 'History' && (
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col gap-4 animate-fade-in-up">
+              <div className="flex items-center gap-3">
+                <CalendarIcon />
+                <h2 className="text-lg font-semibold text-gray-900">Calculation History</h2>
+              </div>
+              
+              <div className="flex flex-col gap-3">
+                {historyData.map(item => (
+                  <div key={item.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <p className="text-lg text-gray-800">
+                      <span className="font-bold relative -right-132">{item.value.toFixed(1)} kg CO₂</span></p><span className="inline-flex items-center gap-1 text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>{item.tag}</span></div><p className="text-sm text-gray-500">{item.period} • {item.date}</p><p className="text-sm text-gray-500">Annual: {item.annualValue.toFixed(1)} kg CO₂</p></div>))}</div></div>)}
         </>
       ) : (<ResultsView onCalculateAgain={() => setCalculatorState('form')} />)}
     </div>
