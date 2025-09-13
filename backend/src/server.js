@@ -6,6 +6,8 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const donationRoutes = require('./routes/donationRoutes');
+const footprintRoutes = require('./routes/footprintRoutes');
+
 
 const app = express();
 app.use(cors({
@@ -39,6 +41,7 @@ app.get('/',(req,res) => {
 // Routes
 app.use('/api/users', authRoutes);
 app.use('/donations', donationRoutes);
+app.use('/api', footprintRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{

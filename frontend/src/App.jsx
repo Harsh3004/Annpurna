@@ -28,7 +28,7 @@ function App() {
           {/* <Route path="/home" element={<Home />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/donate-food' element={<DonateFood />} /> */}
-          <Route path='*' element={<Error />}/>
+          <Route path='*' element={<Error />}/> 
         </Routes>
       </Router>
 
