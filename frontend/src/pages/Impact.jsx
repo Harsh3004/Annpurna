@@ -87,7 +87,7 @@ const AnimatedNumber = ({ value }) => {
 const EmissionsDonutChart = ({ data }) => {
   const chartData = {
     labels: data.map(item => item.category),
-    datasets: [{ data: data.map(item => item.value), backgroundColor:git  ['#34D399', '#FCD34D', '#FB923C'], borderColor: '#ffffff', borderWidth: 2, }],
+    datasets: [{ data: data.map(item => item.value), backgroundColor: ['#34D399', '#FCD34D', '#FB923C'], borderColor: '#ffffff', borderWidth: 2, }],
   };
   const options = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, padding: 20, font: { size: 14 }, color: '#4B5563' } }, tooltip: { callbacks: { label: (c) => `${c.label || ''}: ${c.parsed || 0} kg CO₂` } } }, cutout: '60%' };
   return <div className="relative h-64 w-full"><Doughnut data={chartData} options={options} /></div>;
@@ -98,7 +98,7 @@ const GlobalComparisonBarChart = ({ userAnnual, globalAverage }) => {
     labels: ['Your Annual Footprint', 'Global Average'],
     datasets: [{ data: [userAnnual, globalAverage], backgroundColor: ['#10B981', '#6B7280'], borderColor: ['#047857', '#4B5563'], borderWidth: 1, borderRadius: 5 }],
   };
-  const options = { responsive: true, maintainAsgit pectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.dataset.label || ''}: ${c.parsed.y || 0} kg CO₂` } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'CO₂ (kg)', color: '#4B5563' }, ticks: { color: '#6B7280' }, grid: { color: '#E5E7EB' } }, x: { ticks: { color: '#6B7280' }, grid: { display: false } } } };
+  const options = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.dataset.label || ''}: ${c.parsed.y || 0} kg CO₂` } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'CO₂ (kg)', color: '#4B5563' }, ticks: { color: '#6B7280' }, grid: { color: '#E5E7EB' } }, x: { ticks: { color: '#6B7280' }, grid: { display: false } } } };
   return <div className="relative h-64 w-full"><Bar data={chartData} options={options} /></div>;
 };
 
