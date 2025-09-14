@@ -9,8 +9,6 @@ import training from '../assets/training.png';
 import community1 from '../assets/community1.png';
 import foodDonation from '../assets/foodDonation.png';
 
-
-// Using inline SVGs for icons to keep it in a single file
 const icons = {
   heart: (props) => (
     <svg
@@ -121,7 +119,6 @@ const icons = {
   ),
 };
 
-// Mock data for the posts
 const mockPosts = [
   {
     initials: 'RS',
@@ -158,7 +155,6 @@ const mockPosts = [
   },
 ];
 
-// Mock data for the groups
 const mockGroups = [
   {
     image: 'https://placehold.co/40x40/e2e8f0/0f172a?text=Mumbai+Food',
@@ -183,7 +179,6 @@ const mockGroups = [
   },
 ];
 
-// Mock data for the events
 const mockEvents = [
   {
     image: community1,
@@ -223,7 +218,6 @@ export const Community = () => {
   const tabs = ['Stories', 'Groups', 'Events'];
   const navItems = ['Home', 'Donate', 'Community', 'Impact', 'Profile'];
 
-  // This function will call the Gemini API to get a post suggestion
   const getPostSuggestion = async () => {
     if (!newPostText.trim()) return;
 
@@ -260,9 +254,8 @@ export const Community = () => {
     }
   };
 
-  // This function will call the Gemini API to summarize event contributions
   const getEventSummary = async (eventName, volunteers) => {
-    if (summaryText[eventName]) return; // Don't re-generate if already exists
+    if (summaryText[eventName]) return; 
     
     setLoading(true);
     const apiKey = "";

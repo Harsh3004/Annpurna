@@ -14,7 +14,6 @@ const callGeminiAPI = async (prompt) => {
     };
 
     try {
-        // Using exponential backoff for retries
         let response;
         for (let i = 0; i < 5; i++) {
             response = await fetch(apiUrl, {

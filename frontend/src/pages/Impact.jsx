@@ -204,7 +204,11 @@ const CalculatorView = ({ onBackClick }) => {
   const [mainView, setMainView] = useState('Calculator');
   const [calculatorState, setCalculatorState] = useState('form');
   const [activeCategory, setActiveCategory] = useState('Food');
-  const historyData = [{ id: 1, value: 51.0, period: 'monthly', date: 'Sep 13, 2025', annualValue: 612.0, tag: 'low' }, { id: 2, value: 0.0, period: 'monthly', date: 'Sep 13, 2025', annualValue: 0.0, tag: 'low' }];
+  
+  const historyData = [
+    { id: 1, value: 51.0, period: 'monthly', date: 'Sep 13, 2025', annualValue: 612.0, tag: 'low' },{ id: 2, value: 0.0, period: 'monthly', date: 'Sep 13, 2025', annualValue: 0.0, tag: 'low' }
+  ];
+
   const mainTabClass = (viewName) => `flex-1 flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-full transition-all duration-200 ` + (mainView === viewName ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500');
   const categoryTabClass = (categoryName) => `flex-1 flex items-center justify-center gap-2 py-2 font-semibold rounded-full transition-all duration-200 ` + (activeCategory === categoryName ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:bg-gray-200');
 
@@ -212,12 +216,12 @@ const CalculatorView = ({ onBackClick }) => {
     <div className="w-full max-w-md lg:max-w-screen mx-auto font-sans mb-10">
       {calculatorState === 'form' ? (
         <>
-          <div className="flex items-center mb-6">
-            <button onClick={onBackClick} className="p-2 -ml-2">
-              <BackIcon />
-            </button>
-            <div className="ml-2">
-              <h1 className="text-xl font-bold text-gray-900">Carbon Footprint</h1>
+          <div className="flex items-center mb-6 justify-center">
+            <div className="ml-2 flex flex-col ">
+              <h1 className="text-xl font-bold text-gray-900">
+                Carbon Footprint
+              </h1>
+
               <p className="text-sm text-gray-600">
                 Calculate and track your environmental impact
               </p>
@@ -234,21 +238,85 @@ const CalculatorView = ({ onBackClick }) => {
                 <h2 className="text-lg font-semibold text-gray-900">Carbon Footprint Calculator</h2>
               </div>
               <div>
-                <label htmlFor="time-period" className="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
-                <select id="time-period" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400"><option>Monthly</option><option>Yearly</option></select></div>
-              <div className="flex items-center bg-gray-100 p-1 rounded-full text-sm">
-                {/* <button onClick={() => setActiveCategory('Transport')} className={categoryTabClass('Transport')}>🚗 Transport</button>
-                              <button onClick={() => setActiveCategory('Energy')} className={categoryTabClass('Energy')}>⚡️ Energy</button> */}
+                <label htmlFor="time-period" className="block text-sm font-medium text-gray-700 mb-2">
+                  Time Period
+                </label>
+                <select id="time-period" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400">
+                  <option>Monthly</option>
+                  <option>Yearly</option>
+                </select>
+              </div>
 
-                <button onClick={() => setActiveCategory('Food')} className={categoryTabClass('Food')}>🥗 Food</button></div>
+              <div className="flex items-center bg-gray-100 p-1 rounded-full text-sm">
+                <button onClick={() => setActiveCategory('Food')} className={categoryTabClass('Food')}>
+                  🥗 Food
+                </button>
+              </div>
+
               <div className="flex flex-col gap-4">
                 {activeCategory === 'Transport' && (<p className="text-center text-gray-500 p-4 bg-gray-50 rounded-lg">Transport inputs go here.</p>)}
-                {activeCategory === 'Food' && (<div><label htmlFor="diet-type" className="block text-sm font-medium text-gray-700 mb-2">Diet Type</label><select id="diet-type" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400">
-                  <option value="" disabled selected>Select your diet type</option>
-                  <option value="vegan"></option>
-                  <option value="vegan">Vegan</option>
-                  <option value="vegan">Vegan</option>
-                </select></div>)}
+                
+
+                            {/* --- UPDATED FOOD TAB CONTENT START --- */}
+                            {activeCategory === 'Food' && (
+                                <div className="space-y-6">
+                                    <div className="text-center">
+                                        <h3 className="text-lg font-semibold text-gray-800">Calculate Your Meal's Footprint</h3>
+                                        <p className="text-sm text-gray-500">Enter the details of a food item to see its estimated carbon footprint.</p>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label htmlFor="food-category" className="block text-sm font-medium text-gray-700 mb-2">Food Category</label>
+                                            <select id="food-category" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                                <option>Fruits and fruit products</option>
+                                                <option>Vegetables</option>
+                                                <option>Grains & Cereals</option>
+                                                <option>Meat & Poultry</option>
+                                                <option>Dairy & Eggs</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-2">Quantity (kg)</label>
+                                            <input type="number" id="quantity" defaultValue="1" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-gray-200">
+                                        <h4 className="text-md font-semibold text-gray-600 mb-4">Optional Details for Better Accuracy</h4>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label htmlFor="meal-type" className="block text-sm font-medium text-gray-700 mb-2">Meal Type</label>
+                                                <select id="meal-type" className="w-full bg-gray-100 border border-gray-200 rounded-lg p-3 text-gray-800 appearance-none focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                                    <option value="" disabled selected>Select a meal type</option>
+                                                    <option>Breakfast</option>
+                                                    <option>Lunch</option>
+                                                    <option>Dinner</option>
+                                                    <option>Snack</option>
+                                                </select>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <h5 className="text-sm font-medium text-gray-700 mb-2">Production</h5>
+                                                    <div className="space-y-2 ">
+                                                        <label className="flex items-center gap-2 text-gray-600"><input type="radio" name="production" className="h-4 w-4 text-emerald-600 border-gray-300 focus:ring-emerald-500" defaultChecked /><span>Conventional</span></label>
+                                                        <label className="flex items-center gap-2 text-gray-600"><input type="radio" name="production" className="h-4 w-4 text-emerald-600 border-gray-300 focus:ring-emerald-500" /><span>Organic</span></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h5 className="text-sm font-medium text-gray-700 mb-2">Sourcing</h5>
+                                                    <div className="space-y-2">
+                                                        <label className="flex items-center gap-2 text-gray-600"><input type="radio" name="sourcing" className="h-4 w-4 text-emerald-600 border-gray-300 focus:ring-emerald-500" defaultChecked /><span>Imported</span></label>
+                                                        <label className="flex items-center gap-2 text-gray-600"><input type="radio" name="sourcing" className="h-4 w-4 text-emerald-600 border-gray-300 focus:ring-emerald-500" /><span>Locally Sourced</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+        
+                
                 {activeCategory === 'Energy' && (<p className="text-center text-gray-500 p-4 bg-gray-50 rounded-lg">Energy inputs go here. 💡</p>)}
               </div>
               <button onClick={() => setCalculatorState('result')} className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-5 rounded-lg w-full transition-colors duration-200 mt-2">Calculate Carbon Footprint</button>

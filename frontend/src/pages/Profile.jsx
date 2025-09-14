@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BottomNav } from './common/BottomNav';
 import { IoMdSettings } from "react-icons/io";
+import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 // Icon Components for reusability and cleaner JSX
 const Icon = ({ children, className }) => <div className={className}>{children}</div>;
@@ -215,10 +217,14 @@ const ActivityItem = ({ icon, title, subtitle }) => (
 // Logout and Footer
 const LogoutButton = () => (
     <div className="mx-4 mb-4">
-        <a href="#" className="flex items-center justify-center space-x-3 bg-white rounded-xl shadow p-4 text-red-600 font-bold hover:bg-gray-100">
+        <Link to='/login' 
+        onClick={() => {
+            toast.success("Logout Successfully");
+        }}
+        className="flex items-center justify-center space-x-3 bg-white rounded-xl shadow p-4 text-red-600 font-bold hover:bg-gray-100">
             <LogOutIcon />
             <span>Log Out</span>
-        </a>
+        </Link>
     </div>
 );
 
