@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BottomNav } from './common/BottomNav';
 import { FaHeart, FaLeaf, FaRegSmile, FaUsers, FaTrophy, FaStar } from 'react-icons/fa';
 import {
   Chart as ChartJS,
@@ -190,7 +189,7 @@ const ResultsView = ({ onCalculateAgain }) => {
           <h3 className="font-semibold text-xl text-gray-900 mb-3">
             Ways to Reduce Your Impact
           </h3>
-          <ul className="list-disc list-inside space-y-2 text-emerald-700 list-none"><li><span className="text-gray-700">Choose more plant-based meals (beans, lentils, vegetables) instead of meat.</span></li><li><span className="text-gray-700">Reduce food waste by planning meals and storing food properly.</span></li><li><span className="text-gray-700">Freeze leftovers or surplus ingredients before they spoil.</span></li><li><span className="text-gray-700">Donate surplus food through Annapurna to prevent waste</span></li></ul></div>
+          <ul className="list-disc list-inside space-y-2 text-emerald-700"><li><span className="text-gray-700">Choose more plant-based meals (beans, lentils, vegetables) instead of meat.</span></li><li><span className="text-gray-700">Reduce food waste by planning meals and storing food properly.</span></li><li><span className="text-gray-700">Freeze leftovers or surplus ingredients before they spoil.</span></li><li><span className="text-gray-700">Donate surplus food through Annapurna to prevent waste</span></li></ul></div>
 
         </div>
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md space-y-4"><h3 className="font-semibold text-gray-900">Emissions Breakdown</h3><EmissionsDonutChart data={resultData.breakdown} /></div>
@@ -200,7 +199,7 @@ const ResultsView = ({ onCalculateAgain }) => {
   );
 };
 
-const CalculatorView = ({ onBackClick }) => {
+const CalculatorView = ({ onClose }) => {
   const [mainView, setMainView] = useState('Calculator');
   const [calculatorState, setCalculatorState] = useState('form');
   const [activeCategory, setActiveCategory] = useState('Food');
@@ -216,16 +215,18 @@ const CalculatorView = ({ onBackClick }) => {
     <div className="w-full max-w-md lg:max-w-screen mx-auto font-sans mb-10">
       {calculatorState === 'form' ? (
         <>
-          <div className="flex items-center mb-6 justify-center">
-            <div className="ml-2 flex flex-col ">
-              <h1 className="text-xl font-bold text-gray-900">
-                Carbon Footprint
-              </h1>
-
-              <p className="text-sm text-gray-600">
-                Calculate and track your environmental impact
-              </p>
+          <div className="mb-6 flex items-center justify-between">
+            <div className="ml-2 flex flex-col">
+              <h1 className="text-xl font-bold text-gray-900">Carbon Footprint</h1>
+              <p className="text-sm text-gray-600">Calculate and track your environmental impact</p>
             </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-full border border-gray-200 px-4 py-2 text-xs font-semibold text-gray-600 transition hover:bg-gray-100"
+            >
+              Back to overview
+            </button>
           </div>
           <div className="flex items-center bg-gray-100 p-1 rounded-full mb-6"><button onClick={() => setMainView('Calculator')} className={mainTabClass('Calculator')}><CalculatorIcon /> Calculator</button>
           <button onClick={() => setMainView('History')} className={mainTabClass('History')}><HistoryIcon /> 
@@ -353,8 +354,8 @@ export const Impact = () => {
   const lineChartData = { labels, datasets: [{ label: 'Monthly Progress', data: [0, 95, 63, 10, 55, 72, 22, 30, 10], borderColor: 'rgb(16, 185, 129)', backgroundColor: 'rgba(16, 185, 129, 0.5)', pointBackgroundColor: 'rgb(16, 185, 129)', pointBorderColor: '#fff', pointHoverRadius: 7, pointRadius: 5 }] };
 
   return (
-    <div className="bg-gray-50 min-h-screen font-sans">
-      <div className="container mx-auto lg:mx-0 p-4 max-w-md lg:max-w-screen lg:grid lg:grid-cols-1 mb-20">
+    <div className="space-y-12 pb-10">
+      <div className="px-2 sm:px-0">
         <div>
           <div className="bg-emerald-600 text-white p-5 rounded-2xl shadow-lg mb-6">
             <h1 className="text-2xl font-bold mb-4">Your Impact</h1>
@@ -383,8 +384,8 @@ export const Impact = () => {
             </div>
           </div>
 
-          {showCalculator ? <CalculatorView onBackClick={handleBackClick} /> : <PromoCard onCalculateClick={handleCalculateClick} />}
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          {showCalculator ? <CalculatorView onClose={handleBackClick} /> : <PromoCard onCalculateClick={handleCalculateClick} />}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-6">
             <AnimatedImpactStat icon={<FaLeaf />} value={impactData.co2Saved} unit=" kg" label="CO₂ Saved" bgColor="bg-green-100" />
             <AnimatedImpactStat icon={<FaRegSmile />} value={impactData.smilesShared} label="Smiles Shared" bgColor="bg-yellow-100" />
             <AnimatedImpactStat icon={<FaUsers />} value={impactData.peopleHelped} label="People Helped" bgColor="bg-blue-100" />
@@ -392,12 +393,11 @@ export const Impact = () => {
         </div>
 
         <div className="bg-white p-5 rounded-2xl shadow-sm mb-6"><h2 className="text-lg font-bold text-gray-800 mb-4">Monthly Progress</h2><div className="relative h-64"><Line options={lineChartOptions} data={lineChartData} /></div></div>
-        <div className='lg:grid grid-cols-2 gap-4'>
+        <div className='lg:grid grid-cols-1 lg:grid-cols-2 gap-4'>
           <div className="mb-6"><h2 className="text-lg font-bold text-gray-800 mb-4 px-1">Achievements</h2><div className="grid grid-cols-2 gap-4">{achievements.map((ach) => (<Achievement key={ach.title} {...ach} />))}</div></div>
           <div><h2 className="text-lg font-bold text-gray-800 mb-4 px-1">Local Leaderboard</h2><div>{leaderboard.map((user) => (<LeaderboardItem key={user.rank} {...user} />))}</div></div>
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }

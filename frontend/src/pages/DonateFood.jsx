@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BottomNav } from './common/BottomNav';
 
 // A custom hook to dynamically load scripts like Leaflet.js
 const useScript = (url, cssUrl) => {
@@ -76,13 +75,21 @@ const DirectionsIcon = ({className}) => (<svg xmlns="http://www.w3.org/2000/svg"
 const ClockIcon = ({className}) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>);
 
 // --- Main Layout Components ---
-const Header = ({ title }) => (<header className="bg-emerald-500 text-white p-4 flex items-center sticky top-0 z-10"><h1 className="text-xl font-bold">{title}</h1></header>);
+const Header = ({ title }) => (
+    <header className="rounded-t-[32px] border-b border-white/60 bg-brand-600/95 px-6 py-6 text-white">
+        <h1 className="text-2xl font-semibold">{title}</h1>
+        <p className="mt-1 text-sm text-white/80">Guide surplus meals from your kitchen to the closest hunger spot.</p>
+    </header>
+);
 const ProgressBar = ({ steps, currentStep }) => (
-    <div className="bg-emerald-500 text-white px-4 pb-3 flex justify-between">
+    <div className="flex flex-wrap gap-6 border-b border-white/70 bg-white/70 px-6 py-4 text-sm font-semibold text-brand-700">
         {steps.map((step, index) => (
-            <div key={step} className={`text-center w-1/4 ${index + 1 > currentStep ? 'opacity-50' : ''}`}>
+            <div key={step} className={`inline-flex flex-col items-start pr-6 ${index + 1 > currentStep ? 'opacity-40' : ''}`}>
+                <span className="uppercase tracking-wide text-xs">Step {index + 1}</span>
                 <p className="text-sm font-semibold">{step}</p>
-                <div className={`mt-1 h-1 rounded-full ${index + 1 <= currentStep ? 'bg-white' : 'bg-white/30'}`}></div>
+                <div className="mt-2 h-1 w-24 rounded-full bg-brand-100">
+                    <div className={`h-full rounded-full bg-brand-600 transition-all ${index + 1 <= currentStep ? 'w-full' : 'w-0'}`}></div>
+                </div>
             </div>
         ))}
     </div>
@@ -362,7 +369,7 @@ const Step4FindingVolunteer = ({ data }) => {
         </div>
     );
 };
-const Step5Tracking = ({ data, volunteer, onNext }) => {
+const Step5Tracking = ({ volunteer, onNext }) => {
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const leafletStatus = useScript('https://unpkg.com/leaflet@1.7.1/dist/leaflet.js', 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
@@ -490,7 +497,7 @@ export const DonateFood = () => {
           case 'finding':
               return <Step4FindingVolunteer data={formData} />;
           case 'tracking':
-              return <Step5Tracking data={formData} volunteer={volunteer} onNext={() => { setView('volunteerConfirmation'); setProgress(p => ({ ...p, current: 4 })); }} />;
+              return <Step5Tracking volunteer={volunteer} onNext={() => { setView('volunteerConfirmation'); setProgress(p => ({ ...p, current: 4 })); }} />;
           case 'volunteerConfirmation':
               return <Step6VolunteerConfirmation data={formData} />;
           default:
@@ -500,13 +507,12 @@ export const DonateFood = () => {
 
     return (
       <div className="bg-gray-50 min-h-screen font-sans">
-          <div className="max-w-md lg:max-w-screen mx-auto bg-gray-100">
-              <Header title="Donate Food" />
-              <ProgressBar steps={progress.steps} currentStep={progress.current} />
-              <main className='pb-24'>{renderView()}</main>
-              <BottomNav />
-              <style>{`.animate-fade-in-up { animation: fade-in-up 0.3s ease-out forwards; } @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); }}`}</style>
-          </div>
+          <div className="mx-auto max-w-5xl rounded-[32px] border border-white/70 bg-white/85 shadow-[0_32px_90px_-55px_rgba(12,80,58,0.5)] backdrop-blur">
+                  <Header title="Donate Food" />
+                  <ProgressBar steps={progress.steps} currentStep={progress.current} />
+                  <main className='pb-12 px-4 sm:px-8'>{renderView()}</main>
+                  <style>{`.animate-fade-in-up { animation: fade-in-up 0.3s ease-out forwards; } @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); }}`}</style>
+              </div>
       </div>
     );
 }

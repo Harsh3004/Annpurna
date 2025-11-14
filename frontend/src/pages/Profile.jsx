@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BottomNav } from './common/BottomNav';
 import { IoMdSettings } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -45,31 +44,38 @@ const ToggleSwitch = ({ checked, onChange }) => (
 
 // Header Component
 const ProfileHeader = () => (
-    <header className="bg-emerald-600 text-white p-4 sticky top-0 z-10">
-        <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold">Profile</h1>
-            <PenSquareIcon />
+    <header className="rounded-t-[32px] border-b border-white/60 bg-brand-600/95 px-6 py-6 text-brand-800">
+        <div className="flex items-center justify-between">
+            <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-brand-800/75">Account</p>
+                <h1 className="mt-1 text-2xl font-semibold">Profile</h1>
+            </div>
+            <div className="rounded-full border border-white/40 bg-white/10 p-2 text-brand-800 transition hover:bg-white/20">
+                <PenSquareIcon />
+            </div>
         </div>
     </header>
 );
 
 // User Information Component
 const UserInfo = () => (
-    <div className="bg-emerald-600 text-white p-6 pt-4">
-        <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-green-200 text-emerald-800 rounded-full flex items-center justify-center text-2xl font-bold">
+    <div className="bg-brand-600/95 text-brand-800 px-6 pb-8 pt-6">
+        <div className="flex flex-wrap items-center gap-6">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-2xl font-bold text-brand-700">
                 HJ
             </div>
-            <div className='text-left'>
-                <h2 className="text-xl font-bold">Harsh Joshi</h2>
-                <p className="text-sm text-green-200">harshjoshi3004@gmail.com</p>
-                <div className="flex items-center space-x-2 mt-2">
-                    <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-2.5 py-0.5 rounded-full flex items-center space-x-1">
+            <div className='text-left space-y-3'>
+                <div>
+                    <h2 className="text-xl font-semibold">Harsh Joshi</h2>
+                    <p className="text-sm text-brand-800/80">harshjoshi3004@gmail.com</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
                         <StarIcon />
-                        <span>Level 1 Donor</span>
+                        Level 1 Donor
                     </span>
-                    <span className="bg-gray-600 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full flex items-center space-x-1">
-                        <span>0 Day Streak</span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
+                        0 Day streak
                         <FlameIcon />
                     </span>
                 </div>
@@ -80,8 +86,8 @@ const UserInfo = () => (
 
 // Stats Component
 const Stats = () => (
-    <div className="p-4">
-        <div className="grid grid-cols-3 gap-4 text-center">
+    <div className="px-6 pt-6">
+        <div className="grid gap-4 sm:grid-cols-3">
             <StatCard icon={<HeartIcon />} value="0" label="Donations" />
             <StatCard icon={<StarIconLarge />} value="Level 1" label="Impact Level" />
             <StatCard icon={<UsersIcon />} value="3 Groups" label="Community" />
@@ -90,10 +96,10 @@ const Stats = () => (
 );
 
 const StatCard = ({ icon, value, label }) => (
-    <div className="bg-emerald-600 text-white p-4 rounded-xl shadow">
-        {icon}
-        <p className="font-bold text-lg">{value}</p>
-        <p className="text-xs">{label}</p>
+    <div className="rounded-2xl flex flex-col items-center border border-white/70 bg-white/95 p-5 text-left shadow-sm">
+        <div className="text-brand-600">{icon}</div>
+        <p className="mt-3 text-2xl font-semibold text-brand-800">{value}</p>
+        <p className="mt-1 text-xs uppercase tracking-wide text-brand-700/70">{label}</p>
     </div>
 );
 
@@ -150,29 +156,29 @@ const AppSettings = () => (
 );
 
 const SettingsCard = ({ title, children }) => (
-    <div className="bg-white rounded-xl shadow mx-4 mb-4 p-4">
-        <h3 className="font-bold mb-2">{title}</h3>
-        <div className="space-y-2">
+    <div className="rounded-[28px] border border-white/70 bg-white/95 p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-brand-800">{title}</h3>
+        <div className="mt-4 space-y-2">
             {children}
         </div>
     </div>
 );
 
 const SettingsToggleItem = ({ icon, label, checked, onChange }) => (
-    <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-3">
-            {icon}
-            <span>{label}</span>
+    <div className="flex items-center justify-between rounded-2xl px-3 py-2 text-sm text-brand-700">
+        <div className="flex items-center gap-3">
+            <span className="text-brand-600">{icon}</span>
+            <span className="font-medium text-brand-800">{label}</span>
         </div>
         <ToggleSwitch checked={checked} onChange={onChange} />
     </div>
 );
 
 const SettingsLinkItem = ({ icon, label }) => (
-    <a href="#" className="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 -mx-2">
-        <div className="flex items-center space-x-3">
+    <a href="#" className="flex items-center justify-between rounded-2xl px-3 py-3 text-sm font-medium text-brand-700 transition hover:bg-brand-50">
+        <div className="flex items-center gap-3 text-brand-600">
             {icon}
-            <span>{label}</span>
+            <span className="text-brand-800">{label}</span>
         </div>
         <ChevronRightIcon />
     </a>
@@ -181,9 +187,9 @@ const SettingsLinkItem = ({ icon, label }) => (
 
 // Recent Activity Section
 const RecentActivity = () => (
-    <div className="bg-white rounded-xl shadow mx-4 mb-4 p-4">
-        <h3 className="font-bold mb-3">Recent Activity</h3>
-        <div className="space-y-4">
+    <div className="rounded-[28px] border border-white/70 bg-white/95 p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-brand-800">Recent Activity</h3>
+        <div className="mt-4 space-y-4">
             <ActivityItem 
                 icon={<Icon className="bg-green-100 text-green-700 p-2 rounded-full"><HeartIcon /></Icon>}
                 title="Donated Vegetable Biryani"
@@ -204,11 +210,11 @@ const RecentActivity = () => (
 );
 
 const ActivityItem = ({ icon, title, subtitle }) => (
-    <div className="flex items-start space-x-3">
+    <div className="flex items-start gap-3">
         {icon}
         <div className='text-left'>
-            <p className="font-semibold">{title}</p>
-            <p className="text-sm text-gray-500">{subtitle}</p>
+            <p className="text-sm font-semibold text-brand-800">{title}</p>
+            <p className="text-xs text-brand-700/70">{subtitle}</p>
         </div>
     </div>
 );
@@ -216,12 +222,12 @@ const ActivityItem = ({ icon, title, subtitle }) => (
 
 // Logout and Footer
 const LogoutButton = () => (
-    <div className="mx-4 mb-4">
+    <div className="px-6">
         <Link to='/login' 
         onClick={() => {
             toast.success("Logout Successfully");
         }}
-        className="flex items-center justify-center space-x-3 bg-white rounded-xl shadow p-4 text-red-600 font-bold hover:bg-gray-100">
+        className="flex items-center justify-center gap-3 rounded-[28px] border border-red-100 bg-white/95 p-4 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-50">
             <LogOutIcon />
             <span>Log Out</span>
         </Link>
@@ -229,9 +235,8 @@ const LogoutButton = () => (
 );
 
 const ProfileFooter = () => (
-    <footer className="text-center text-gray-500 text-sm py-4">
-        <p>Annapurna v1.0.0</p>
-        <p>Made with ❤️ for fighting hunger</p>
+    <footer className="px-6 pb-8 text-center text-xs text-brand-700/60">
+        <p>Annapurna v1.0.0 • Built for volunteers and food champions</p>
     </footer>
 );
 
@@ -245,20 +250,25 @@ const NavItem = ({ icon, label, active = false }) => (
 
 export const Profile = () => {
   return (
-    <div className="bg-gray-100 font-sans">
-        <div className="max-w-md lg:max-w-screen mx-auto bg-gray-100 shadow-lg min-h-screen relative">
+    <div className="space-y-12 pb-12">
+        <div className="mx-auto max-w-5xl rounded-[32px] border border-white/70 bg-white/85 shadow-[0_32px_90px_-55px_rgba(12,80,58,0.5)] backdrop-blur">
             <ProfileHeader />
-            <main className="pb-24">
+            <main className="space-y-6 px-0 pb-8">
                 <UserInfo />
                 <Stats />
-                <QuickSettings />
-                <AccountSettings />
-                <AppSettings />
-                <RecentActivity />
+                <div className="grid gap-6 px-6 lg:grid-cols-2">
+                    <QuickSettings />
+                    <AccountSettings />
+                </div>
+                <div className="px-6">
+                    <AppSettings />
+                </div>
+                <div className="px-6">
+                    <RecentActivity />
+                </div>
                 <LogoutButton />
                 <ProfileFooter />
             </main>
-            <BottomNav />
         </div>
     </div>
   );

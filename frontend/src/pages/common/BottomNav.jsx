@@ -20,11 +20,9 @@ const UserCircleIcon = () => (
 );
 
 export const BottomNav = () => {
-  // Get the current location object, which contains the pathname
   const location = useLocation();
 
   const navItems = [
-    // Added a 'path' property for a more robust check
     { name: 'Home', icon: <HomeIcon />, path: '/home' },
     { name: 'Donate', icon: <HeartIcon />, path: '/donate' },
     { name: 'Community', icon: <UsersIcon />, path: '/community' },
@@ -33,29 +31,27 @@ export const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 max-w-md md:max-w-screen mx-auto md:mx-0 bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.1)] p-2">
-      <div className="flex justify-around">
+    <nav className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
+      <div className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-1 rounded-full border border-white/70 bg-white/90 px-2 py-2 shadow-[0_18px_35px_-22px_rgba(12,80,58,0.55)] backdrop-blur">
         {navItems.map((item) => {
-          // Determine if the current URL pathname matches the item's path
           const isActive = location.pathname === item.path;
 
           return (
             <Link
               to={item.path}
               key={item.name}
-              // The onClick handler is no longer needed
-              className={`flex flex-col items-center justify-center text-xs w-16 h-16 rounded-lg transition-colors ${
+              className={`flex flex-1 items-center justify-center gap-1 rounded-full px-2 py-2 text-[13px] font-semibold transition ${
                 isActive
-                  ? 'bg-emerald-100 text-emerald-600'
-                  : 'text-gray-500 hover:bg-gray-100'
+                  ? 'bg-brand-600 text-white shadow-md'
+                  : 'text-brand-700 hover:bg-brand-50'
               }`}
             >
-              <div className={`h-6 w-6 mb-1 ${isActive ? 'stroke-2' : ''}`}>{item.icon}</div>
-              {item.name}
+              <span className={`mb-[1px] h-5 w-5 ${isActive ? 'text-white' : 'text-brand-600/80'}`}>{item.icon}</span>
+              <span className="hidden sm:inline">{item.name}</span>
             </Link>
           );
         })}
       </div>
     </nav>
   );
-}
+};

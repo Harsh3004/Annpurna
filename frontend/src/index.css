@@ -1,19 +1,147 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
-#root{
-    margin: 0;
-    padding: 0;
+:root {
+  color-scheme: light;
+  --font-sans: "Manrope", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --color-brand-25: #f5fbf8;
+  --color-brand-50: #ecf7f1;
+  --color-brand-100: #d2ecdf;
+  --color-brand-200: #a8dec7;
+  --color-brand-300: #7ad1af;
+  --color-brand-400: #4cc499;
+  --color-brand-500: #2caf86;
+  --color-brand-600: #1f9671;
+  --color-brand-700: #17785a;
+  --color-brand-800: #125c46;
+  --color-brand-900: #0b3f31;
+  --color-warm-50: #fef8f0;
+  --color-warm-100: #fdeacc;
+  --color-warm-200: #fbd29b;
+  --color-warm-300: #f6a95f;
+  --color-warm-400: #ef8533;
+  --color-warm-500: #e26a1d;
+  --shadow-soft: 0 20px 45px -25px rgba(12, 80, 58, 0.35);
+  --shadow-card: 0 12px 35px -18px rgba(12, 80, 58, 0.35);
+  --radius-xl: 1.75rem;
+  --radius-3xl: 2.25rem;
 }
 
-.carbon-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 24px;
-  max-width: 380px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 16px; /* Controls spacing between the elements inside the card */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at 0% 0%, rgba(44, 175, 134, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(255, 196, 112, 0.15), transparent 50%),
+    linear-gradient(155deg, #f8faf9 0%, #f4f9f7 60%, #ecf7f1 100%);
+  color: #0b3f31;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.bg-brand-500 {
+  background-color: var(--color-brand-500);
+}
+
+.bg-brand-600 {
+  background-color: var(--color-brand-600);
+}
+
+.bg-brand-50 {
+  background-color: var(--color-brand-50);
+}
+
+.text-brand-600 {
+  color: var(--color-brand-600);
+}
+
+.text-brand-800 {
+  color: var(--color-brand-800);
+}
+
+.border-brand-100 {
+  border-color: var(--color-brand-100);
+}
+
+.border-brand-200 {
+  border-color: var(--color-brand-200);
+}
+
+.card-ring {
+  position: relative;
+}
+
+.card-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+.subtle-border {
+  border: 1px solid rgba(12, 80, 58, 0.08);
+}
+
+.eyebrow {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(11, 63, 49, 0.65);
+}
+
+.shadow-lift {
+  box-shadow: var(--shadow-card);
+}
+
+.section-heading {
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0b3f31;
+}
+
+.section-subcopy {
+  font-size: clamp(1rem, 1.65vw, 1.15rem);
+  color: rgba(11, 63, 49, 0.7);
+}
+
+.pattern-grid {
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.15), transparent 65%);
+  background-image: linear-gradient(0deg, rgba(12, 80, 58, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 80, 58, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.fade-edge {
+  position: relative;
+}
+
+.fade-edge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.text-balance {
+  text-wrap: balance;
 }
